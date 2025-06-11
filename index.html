@@ -3,328 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuidado!</title>
+  <title>Nosso Contador de Amor</title>
   <style>
-    /* Estilo para a tela inicial */
-    .warning-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      color: red;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    body {
       font-family: 'Arial', sans-serif;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .warning-text {
-      font-size: 5em;
+      background-color: #ffebee;
       text-align: center;
-      animation: blink 1s infinite;
+      margin: 0;
+      padding: 20px;
+      color: #d81b60;
     }
-
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-
-    /* Estilo para a tela de confirmação */
-    .confirm-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: darkred;
-      color: white;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
-      z-index: 999;
+    h1 {
+      color: #c2185b;
+      font-size: 2.5em;
+      margin-bottom: 10px;
     }
-
-    .confirm-text {
-      font-size: 3em;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .confirm-buttons {
-      display: flex;
-      gap: 20px;
-    }
-
-    .confirm-btn {
-      padding: 15px 30px;
-      font-size: 1.5em;
-      border: none;
+    .counter {
+      font-size: 2em;
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #f8bbd0;
       border-radius: 10px;
-      cursor: pointer;
     }
-
-    .yes-btn {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    .no-btn {
-      background-color: #f44336;
-      color: white;
-    }
-
-    /* Estilo para a tela "Eu tentei avisar" */
-    .final-warning-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #8B0000;
-      color: white;
-      display: none;
-      flex-direction: column;
+    .photo-container {
+      margin: 30px 0;
+      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
-      z-index: 998;
+      gap: 15px;
     }
-
-    .final-warning-text {
-      font-size: 4em;
-      text-align: center;
-      animation: shake 0.5s infinite;
+    .photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
     }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      50% { transform: translateX(10px); }
-      75% { transform: translateX(-10px); }
-      100% { transform: translateX(0); }
+    .photo:hover {
+      transform: scale(1.05);
     }
-
-    /* Estilo para a tela principal (que já tínhamos) */
-    .main-screen {
-      display: none;
+    .btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 20px 0;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #c2185b;
+    }
+    .heart {
+      color: #e91e63;
+      font-size: 1.5em;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
 <body>
-<!-- Tela inicial de aviso -->
-<div class="warning-screen" id="warningScreen">
-  <div class="warning-text">NÃO CLIQUE AQUI!</div>
-</div>
+<div class="container">
+  <h1>Feliz Dia dos Namorados! <span class="heart">♥</span></h1>
+  <p>Contando cada momento especial desde o início:</p>
 
-<!-- Tela de confirmação -->
-<div class="confirm-screen" id="confirmScreen">
-  <div class="confirm-text">Você tem certeza?</div>
-  <div class="confirm-buttons">
-    <button class="confirm-btn yes-btn" id="yesBtn">SIM</button>
-    <button class="confirm-btn no-btn" id="noBtn">NÃO</button>
+  <div class="counter" id="loveCounter">
+    Carregando...
   </div>
-</div>
 
-<!-- Tela "Eu tentei avisar" -->
-<div class="final-warning-screen" id="finalWarningScreen">
-  <div class="final-warning-text">EU TENTEI AVISAR!</div>
-</div>
-
-<!-- Tela principal do Dia dos Namorados (a que já tínhamos) -->
-<div class="main-screen" id="mainScreen">
-  <div class="container">
-    <h1>Feliz Dia dos Namorados! <span class="heart">♥</span></h1>
-    <p>Contando cada momento especial desde o início:</p>
-
-    <div class="counter" id="loveCounter">
-      Carregando...
-    </div>
-
-    <div class="photo-container" id="photoGallery">
-      <p>Nossas fotos aparecerão aqui!</p>
-    </div>
-
-    <a href="fotos.html" class="btn">Ver Mais Fotos</a>
-
-    <p>Todo dia ao seu lado é especial!</p>
+  <div class="photo-container" id="photoGallery">
+    <!-- As fotos serão adicionadas aqui dinamicamente -->
+    <p>Nossas fotos aparecerão aqui!</p>
   </div>
+
+  <p>Todo dia ao seu lado é especial!</p>
 </div>
 
 <script>
-  // Elementos das telas
-  const warningScreen = document.getElementById('warningScreen');
-  const confirmScreen = document.getElementById('confirmScreen');
-  const finalWarningScreen = document.getElementById('finalWarningScreen');
-  const mainScreen = document.getElementById('mainScreen');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
+  // Data de início do relacionamento (7 de abril de 2025)
+  const startDate = new Date('2025-04-07T00:00:00');
 
-  // Quando clicar na tela de aviso
-  warningScreen.addEventListener('click', () => {
-    warningScreen.style.display = 'none';
-    confirmScreen.style.display = 'flex';
-  });
+  function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
 
-  // Quando clicar no NÃO
-  noBtn.addEventListener('click', () => {
-    confirmScreen.style.display = 'none';
-    warningScreen.style.display = 'flex';
-  });
+    // Calcula dias, horas, minutos e segundos
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  // Quando clicar no SIM
-  yesBtn.addEventListener('click', () => {
-    confirmScreen.style.display = 'none';
-    finalWarningScreen.style.display = 'flex';
-
-    // Depois de 3 segundos, mostra a tela principal
-    setTimeout(() => {
-      finalWarningScreen.style.display = 'none';
-      mainScreen.style.display = 'block';
-
-      // Inicia o contador e carrega as fotos
-      initMainScreen();
-    }, 3000);
-  });
-
-  // Funções para a tela principal
-  function initMainScreen() {
-    // Data de início do relacionamento (7 de abril de 2025)
-    const startDate = new Date('2025-04-07T00:00:00');
-
-    function updateCounter() {
-      const now = new Date();
-      const diff = now - startDate;
-
-      // Calcula dias, horas, minutos e segundos
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('loveCounter').innerHTML = `
-                    ${days} dias, ${hours} horas, ${Math.floor(minutes)} minutos e ${Math.floor(seconds)} segundos
-                `;
-    }
-
-    // Atualiza o contador a cada segundo
-    updateCounter();
-    setInterval(updateCounter, 1000);
-
-    // Array para armazenar links das fotos do Drive
-    const photoLinks = [
-      // Adicione seus links aqui
-      // 'https://drive.google.com/uc?export=view&id=SEU_ID_DA_IMAGEM'
-    ];
-
-    // Função para carregar as fotos na galeria
-    function loadPhotos() {
-      const gallery = document.getElementById('photoGallery');
-
-      if (photoLinks.length === 0) {
-        gallery.innerHTML = '<p>Adicione links das suas fotos no código!</p>';
-        return;
-      }
-
-      gallery.innerHTML = ''; // Limpa o conteúdo anterior
-
-      photoLinks.forEach(link => {
-        const img = document.createElement('img');
-        img.src = link;
-        img.className = 'photo';
-        img.alt = 'Nossa foto';
-        gallery.appendChild(img);
-      });
-    }
-
-    // Carrega as fotos
-    loadPhotos();
-
-    // Aplica os estilos da tela principal
-    const style = document.createElement('style');
-    style.textContent = `
-                body {
-                    font-family: 'Arial', sans-serif;
-                    background-color: #ffebee;
-                    text-align: center;
-                    margin: 0;
-                    padding: 20px;
-                    color: #d81b60;
-                }
-                .container {
-                    max-width: 800px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background-color: white;
-                    border-radius: 15px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                }
-                h1 {
-                    color: #c2185b;
-                    font-size: 2.5em;
-                    margin-bottom: 10px;
-                }
-                .counter {
-                    font-size: 2em;
-                    margin: 20px 0;
-                    padding: 15px;
-                    background-color: #f8bbd0;
-                    border-radius: 10px;
-                }
-                .photo-container {
-                    margin: 30px 0;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    gap: 15px;
-                }
-                .photo {
-                    width: 200px;
-                    height: 200px;
-                    object-fit: cover;
-                    border-radius: 10px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                    transition: transform 0.3s;
-                }
-                .photo:hover {
-                    transform: scale(1.05);
-                }
-                .btn {
-                    background-color: #e91e63;
-                    color: white;
-                    border: none;
-                    padding: 12px 25px;
-                    font-size: 1.1em;
-                    border-radius: 30px;
-                    cursor: pointer;
-                    margin: 20px 0;
-                    text-decoration: none;
-                    display: inline-block;
-                    transition: background-color 0.3s;
-                }
-                .btn:hover {
-                    background-color: #c2185b;
-                }
-                .heart {
-                    color: #e91e63;
-                    font-size: 1.5em;
-                    animation: pulse 1.5s infinite;
-                }
-                @keyframes pulse {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.3); }
-                    100% { transform: scale(1); }
-                }
+    document.getElementById('loveCounter').innerHTML = `
+                ${days} dias, ${hours} horas, ${Math.floor(minutes)} minutos e ${Math.floor(seconds)} segundos
             `;
-    document.head.appendChild(style);
   }
+
+  // Atualiza o contador a cada segundo
+  updateCounter();
+  setInterval(updateCounter, 1000);
+
+  // Array com os nomes/caminhos das imagens locais
+  const localPhotos = [
+    'fotos/nossa-foto-1.jpg',
+    'fotos/2.jpg',
+    'fotos/3.jpg'
+    // Adicione mais fotos conforme necessário
+  ];
+
+  // Função para carregar as fotos na galeria
+  function loadPhotos() {
+    const gallery = document.getElementById('photoGallery');
+
+    if (localPhotos.length === 0) {
+      gallery.innerHTML = '<p>Adicione suas fotos na pasta do projeto!</p>';
+      return;
+    }
+
+    gallery.innerHTML = ''; // Limpa o conteúdo anterior
+
+    localPhotos.forEach(photoPath => {
+      const img = document.createElement('img');
+      img.src = photoPath;
+      img.className = 'photo';
+      img.alt = 'Nossa foto';
+      gallery.appendChild(img);
+    });
+  }
+
+  // Carrega as fotos quando a página é aberta
+  window.onload = loadPhotos;
 </script>
 </body>
 </html>
